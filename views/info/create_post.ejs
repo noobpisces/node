@@ -1,0 +1,50 @@
+<div class="form-create-post">
+    <div class="first-create-post">
+        <img id="avartar" src="<%= user.profilePicture %>" alt="">
+        <input name="texts" id="feel" placeholder="Bạn đang nghĩ gì vậy <%= user.name %> ?"></input>
+    </div>
+    <div class="second-create-post"></div>
+</div>
+
+
+
+
+<div id="Modal-CreatePost" class="Modal-CreatePost">
+    <span class="close" style="background-color: red;">&times;</span>
+
+    <form action="/main" method="POST" id="postForm" enctype="multipart/form-data">
+        <div class="modal-content">
+            <h1>Create Post</h1>
+            <div class="user-content-visibility">
+                <div class="user">
+                    <img src="<%= user.profilePicture %>" alt="hihi" id="avartar">
+                </div>
+                <div class="visibility">
+                    <span>
+                        <%= user.name %>
+                    </span>
+                    <select id="visibility" name="visibility">
+                        <option value="public">public</option>
+                        <option value="friends">friends</option>
+                        <option value="private">private</option>
+                    </select>
+                </div>
+            </div>
+            <div class="content">
+                <textarea id="content" name="content" placeholder="Bạn đang nghĩ gì vậy" required></textarea>
+            </div>
+            <div class="location">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location">
+            </div>
+            <div class="Media">
+                <label>Media</label>
+                <input type="file" name="Picture_Video" multiple>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" class="btn">Create Post</button>
+        </div>
+    </form>
+
+
+</div>

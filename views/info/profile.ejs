@@ -1,0 +1,142 @@
+<%- include('./head.ejs') %>
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/modal-post.css">
+    <link rel="stylesheet" href="/css/picture_video.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    </head>
+
+    <body>
+        <%- include('./navigation.ejs') %>
+
+            <div class="profile">
+                <div class="detail-profile">
+                    <div class="user_avartar">
+                        <img src="<%= user_query.profilePicture ? user_query.profilePicture : 'images/avatar/66797a8c9bb5d0b914b421b9-1719802717362-433928235PEhn8kSfHBhHASxgQSidcn-1200-80.jpg'%>" alt="hihi" class="img-fluid"
+                            style="width: 180px; border-radius: 10px;">
+                    </div>
+                    <div class="name_bio_etc">
+                        <h5 class="user_query_name">
+                            <%= user_query.name %>
+
+                        </h5>
+                        <p class="user_query_bio">
+                            <%= user_query.bio %>
+                        </p>
+                        <div class="post_follow">
+                            <div>
+                                <p class="post-label">Posts</p>
+                                <p class="post_numbers">
+                                    <%= user_query.posts.length %>
+                                </p>
+                            </div>
+                            <div class="followers_nums">
+                                <p class="followers_label">Followers</p>
+                                <p class="followers_numbers">
+                                    <%= user_query.followers.length %>
+                                </p>
+                            </div>
+                            <div class="followings_nums">
+                                <p class="followings_nums">Followings</p>
+                                <p class="followings_nums">
+                                    <%= user_query.followings.length %>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="drop_follow_btn">
+                            <% if(check) {%>
+                                <div class="dropdown">
+                                    <button class="drop-down-btn" type="button" aria-expanded="false">
+                                        v
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href='/infomation?update=true'>Update
+                                                profile</a></li>
+                                        <li><a class="dropdown-item" href='/infomation'>Profile</a></li>
+                                        <li><a class="dropdown-item" href="#">Update avatar</a></li>
+                                    </ul>
+                                </div>
+                                <% } else {%>
+                                    <button type="button" class="chat_btn" >Chat</button>
+                                    <% if(followed){ %>
+                                        <button type="button" class="follow_btn"
+                                            onclick="postToUpdate('<%= user_query.name %>', '<%= csrfToken %>')">Followed</button>
+                                        <% } else{ %>
+                                            <button type="button" class="follow_btn"
+                                                onclick="postToUpdate('<%= user_query.name %>', '<%= csrfToken %>')">Follow</button>
+                                            <% } %>
+                                                <% } %>
+                        </div>
+
+                    </div>
+                </div>
+                <% let c = 0  %>
+                <% for(let i = 0; i< user.chats.length;i++){ %>
+                    <% if (user.chats[i].with.name == user_query.name){  %>
+                        <% c = 1 %>
+                        <%- include('./chat-box.ejs',{chat_id :user.chats[i].chat,chatted:'profile_chatted'}) %>
+                        <% break %>
+                    <% } }%>
+                <% if (c == 0){%>
+                    <%- include('./chat-box.ejs',{chat_id :false,chatted:'no_chatted'} )%>
+                    <%} %>
+            </div>
+            
+            <div class="container-post-profile">
+                <div class="row">
+                    <% posts.forEach(function(post) { %>
+                        <div class="first-picture">
+                            <div class="img-first">
+
+                                <img src="<%= post.media[0].url%>" class="card-img-top" alt="Hình ảnh đại diện">
+    
+                            </div>
+                            <%- include('./modal-post.ejs', { post: post }) %>
+                            <span class="like-comment-info">
+                                <%=post.likes.length%> like and <%=post.comments.length%> comments
+                            </span>
+                        </div>
+                        <% }); %>
+                </div>
+            </div>
+
+
+            <script>
+                function postToUpdate(username, csrfToken) {
+                    // Tạo một form
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/follow?username=' + encodeURIComponent(username);
+
+                    // Tạo trường ẩn CSRF
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_csrf';
+                    csrfInput.value = csrfToken;
+
+                    // Thêm trường ẩn CSRF vào form
+                    form.appendChild(csrfInput);
+
+                    // Thêm form vào body và gửi nó
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+
+            </script>
+            <script src="/socket.io/socket.io.js"></script>
+            <script src="js/socket.js"></script>
+            <script src="js/navigation.js"></script>
+            <script src="js/picture_video.js"></script>
+            <script src="js/like-cmt.js"></script>
+            <script src="js/profile.js"></script>
+            <script src="js/chat.js"></script>
+            <!-- <script>
+                document.getElementById('deletePostLink').addEventListener('click', function (event) {
+                    event.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết
+                    document.getElementById('deletePostForm').submit(); // Gửi form
+                });
+            </script> -->
+    </body>
+
+    </html>

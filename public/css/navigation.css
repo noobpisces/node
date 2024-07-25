@@ -1,0 +1,105 @@
+.nav {
+    background-color: bisque;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+}
+
+.nav-main {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.nav-item {
+    padding: 10px;
+}
+
+.nav-auth {
+    list-style-type: none;
+    display: flex;
+}
+
+
+/* notification */
+.notification-dropdown {
+    width: 100%;
+}
+
+.notification-content {
+    display: none;
+    position: absolute;
+}
+
+.notification-content.show {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    max-height: 300px;
+    overflow-y: auto;
+    align-items: center;
+}
+
+.notification-content .view-more-btn {
+    width: 20%;
+}
+
+.notification-items .notification-item {
+    text-align: center;
+    text-decoration: none;
+    border-bottom: 1px solid black;
+}
+
+.notification-content .notification-item a {
+    text-decoration: none;
+}
+
+.message_content{
+    display: none;
+}
+
+.message_content.show{
+    display: block;
+    position: absolute;
+    z-index: 9999;
+    
+}
+
+.msg_content{
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    overflow: hidden;
+}
+.message-item{
+    display: flex;
+    align-items: center;
+    background-color: aquamarine;
+}
+.mess{
+    display: flex;
+}
+
+.chat_boxs{
+    display: flex;
+    justify-content: space-around;
+}
+.list_user{
+    display: none;
+}
+
+.list_user.show{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: rgb(203, 203, 222);
+}
+.user_link{
+    display: flex;
+    align-items: center}

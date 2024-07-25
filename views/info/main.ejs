@@ -1,0 +1,39 @@
+<%- include('./head.ejs') %>
+<link rel="stylesheet" href="/css/create-post.css">
+<link rel="stylesheet" href="/css/post.css">
+<link rel="stylesheet" href="/css/modal-post.css">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/picture_video.css">
+<link rel="stylesheet" href="/css/chat.css">
+    </head>
+
+    <body>
+        <%- include('./navigation.ejs') %>
+            <%- include('./create_post.ejs') %>
+
+            <input type="hidden" value="<%= user._id %>" id="user_main">
+                <main class="posts">
+                    <% if (posts) { %>
+                        <% for (let key in posts) { %>
+                            <% for (let value of posts[key]) { %>
+
+                                <%- include('./post.ejs',{post : value,user : user,user_query : users[key]})
+                                    %></div>
+
+
+                                    <% }} %>
+                                        <% } else { %>
+                                            <p>No posts to display.</p>
+                                            <% } %>
+                </main>
+                <script src="/socket.io/socket.io.js"></script>
+                <script src="js/socket.js"></script>
+                <script src="js/navigation.js"></script>
+                <script src="js/create-post.js"></script>
+                <script src="js/picture_video.js"></script>
+                <script src="js/modal-post.js"></script>
+                <script src="js/like-cmt.js"></script>
+                <script src="js/chat.js"></script>
+                <script src="js/main.js"></script>
+    </body>
+    

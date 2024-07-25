@@ -1,0 +1,9 @@
+<% if(Users){ %>
+    <% for (let i = 0; i< Users.length;i++){%>
+        <a class="user" href="/profile/username=<%= Users[i].name %>">
+            <img src="<%= Users[i].imageProfile %>" alt="" class="avartar">
+            <span class="name">
+                <%= Users[i].name %>
+            </span>
+        </a>
+        <%} }%>

@@ -1,0 +1,71 @@
+.Modal-Post{
+    display: block;
+    margin-top: 100px;
+    width: 80%;
+    margin-left: 100px;
+}
+.Modal-Post .modal-content{
+    background-color: white;
+    display: flex;
+    z-index: 9999;
+    justify-content: center;
+}
+.modal-content .post{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.modal-content .box_cmt{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box_cmt .box-footer{
+    display: flex;
+}
+
+.box_cmt .box-comments{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 650px;
+    overflow-y: auto;
+}
+.box-comments .box-comment{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.comment-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.update_post{
+    display: flex;
+    background-color: khaki;
+    margin-top : 100px;
+    flex-direction: column;
+}
+
+.imgs{
+    display: flex;
+    flex-wrap:wrap;
+}
+.media-item1{
+    display: flex;
+}
+.media-item2{
+    display: flex;
+}
+.img_post{
+    display: flex;
+    height: 400px;
+    width: 400px;
+}
+.delete_media_item{
+    position: absolute
+}

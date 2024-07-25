@@ -1,0 +1,24 @@
+<%- include('../info/head.ejs') %>
+
+    </head>
+
+    <body>
+        <%- include('../info/navigation.ejs') %>
+
+            <main>
+
+                        <form class="check-form" action="/check_signup" method="POST" novalidate>
+                            <div class="form-group">
+                                <label for="name">code</label>
+                                <input type="hidden" name="password" value="<%= password %>">
+                                <input type="hidden" name="email" value="<%= email %>">
+                                <input type="hidden" name="name" value="<%= name %>">
+                                <input type="text" class="form-control" style="margin: 200px;" name="otp"  required>
+                            </div>
+        
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="btn btn-primary" type="submit">check</button>
+                        </form>
+            </main>
+    </body>
+    </html>

@@ -1,0 +1,70 @@
+<%- include('./head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+    </head>
+    </head>
+
+    <body>
+        <%- include('./navigation.ejs') %>
+            <main>
+                <% if (posts.length> 0) { %>
+                    <% posts.forEach(post=> { %>
+                        <article class="post">
+                            <header>
+                                <h2>
+                                    <%= post.author.name %>
+                                </h2>
+                                <p>Posted on <%= post.createdAt.toDateString() %>
+                                </p>
+                            </header>
+                            <section>
+                                <p>
+                                    <%= post.content %>
+                                </p>
+                                <% if (post.media && post.media.length> 0) { %>
+                                    <div class="media">
+                                        <% post.media.forEach(mediaItem=> { %>
+                                            <% if (mediaItem.type==='image' ) { %>
+                                                <img src="<%= mediaItem.url %>" alt="Post image">
+                                                <% } else if (mediaItem.type==='video' ) { %>
+                                                    <video controls>
+                                                        <source src="<%= mediaItem.url %>" type="video/mp4">
+                                                        Your browser does not support the video tag.
+                                                    </video>
+                                                    <% } %>
+                                                        <% }) %>
+                                    </div>
+                                    <% } %>
+                                        <p>Location: <%= post.location %>
+                                        </p>
+                                        <p>Status: <%= post.status %>
+                                        </p>
+                                        <p>Visibility: <%= post.visibility %>
+                                        </p>
+                                        <p>Tags: <%= post.tags.join(', ') %></p>
+                        </section>
+                        <footer>
+                            <div class="likes">
+                                <p><%= post.likes.length %> likes</p>
+                            </div>
+                            <div class="comments">
+                                <h3>Comments:</h3>
+                                <% if (post.comments.length > 0) { %>
+                                    <ul>
+                                        <% post.comments.forEach(comment => { %>
+                                            <li>
+                                                <p><strong><%= comment.user.name %>:</strong> <%= comment.content %></p>
+                                                <p>Commented on <%= comment.createdAt.toDateString() %></p>
+                                            </li>
+                                        <% }) %>
+                                    </ul>
+                                <% } else { %>
+                                    <p>No comments yet.</p>
+                                <% } %>
+                            </div>
+                        </footer>
+                    </article>
+                <% }) %>
+            <% } else { %>
+                <p>No posts to display.</p>
+            <% } %>
+    </body>

@@ -1,0 +1,147 @@
+<nav class="nav">
+    <% if (isAuthenticated) { %>
+        <ul class="nav-main">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile?username=<%=user.name%>">Trang cá nhân</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/main">Trang chủ</a>
+            <li class="nav-item">
+                <div class="container-fluid">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchInput">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <%- include('./lookup.ejs') %>
+                    </form>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <div class="notification-dropdown">
+                    <button class="notification-btn">
+                        Notifications <span class="notification-count">
+                            <%=user.notification.length%>
+                        </span>
+                    </button>
+
+                    <div class="notification-content">
+                        <% if (user.notification.length> 0) { %>
+                            <div class="notification-items">
+                                <% for (let i=user.notification.length - 1; i>= 0; i--) { %>
+                                    <div class="notification-item">
+                                        <% if (user.notification[i].post && user.notification[i].comment) { %>
+                                            <a href="post?post_Id=<%= user.notification[i].post %>">
+                                                <%= user.notification[i].content %> - <%= new
+                                                        Date(user.notification[i].createdAt).toLocaleString('en-US', {
+                                                        timeZone: 'UTC' }) %>
+                                            </a>
+                                            <% } else if (user.notification[i].post) { %>
+                                                <a href="post?post_Id=<%= user.notification[i].post %>">
+                                                    <%= user.notification[i].content %> - <%= new
+                                                            Date(user.notification[i].createdAt).toLocaleString('en-US',
+                                                            { timeZone: 'UTC' }) %>
+                                                </a>
+                                                <% } else { %>
+                                                    <a href="profile?username=<%= user.notification[i].who.name %>">
+                                                        <%= user.notification[i].content %> - <%= new
+                                                                Date(user.notification[i].createdAt).toLocaleString('en-US',
+                                                                { timeZone: 'UTC' }) %>
+                                                    </a>
+                                                    <% } %>
+                                    </div>
+                                    <% } %>
+                            </div>
+                            <button class="view-more-btn">Xem thêm</button>
+                            <% } %>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="message_dropdown">
+                    <button class="message-btn">
+                        message <span class="message-count">
+                            <%=user.chats.length%>
+                        </span>
+                    </button>
+
+                    <% if (user.chats.length>0){ %>
+                        <div class="message_content">
+
+                            <% for (let i=0; i< user.chats.length;i++){ %>
+
+                                <div class="message-item">
+                                    <div class="name_img_mess">
+                                        <img class="avartar"
+                                            src="<%=user.chats[i].with.profilePicture ? user.chats[i].with.profilePicture : 'images/avatar/66797a8c9bb5d0b914b421b9-1719802717362-433928235PEhn8kSfHBhHASxgQSidcn-1200-80.jpg'%>"
+                                            alt="">
+
+                                    </div>
+                                    <div class="msg_content">
+                                        <span>
+                                            <%=user.chats[i].with.name%>
+                                        </span>
+                                        <% if
+                                            (!chats[user.chats[i].chat].contents[chats[user.chats[i].chat].contents.length-1].author.equals(user._id)){
+                                            %>
+                                            <div class="mess">
+                                                <span>
+                                                    <%=
+                                                        chats[user.chats[i].chat].contents[chats[user.chats[i].chat].contents.length-1].author.name%>
+                                                        :
+
+                                                </span>
+                                                <span>
+                                                    <%=
+                                                        chats[user.chats[i].chat].contents[chats[user.chats[i].chat].contents.length-1].content%>
+                                                </span>
+                                            </div>
+
+                                            <% } else { %>
+                                                <div class="mess">
+                                                    <span>bạn: </span>
+                                                    <span>
+                                                        <%=
+                                                            chats[user.chats[i].chat].contents[chats[user.chats[i].chat].contents.length-1].content%>
+                                                    </span>
+                                                </div>
+
+                                                <%}%>
+                                    </div>
+                                </div>
+
+
+                                <% } }%>
+
+
+                        </div>
+                        <div class="chat_boxs">
+                            <% for (let i=0; i< user.chats.length;i++){ %>
+                                <%- include('./chat-box.ejs',{chat_id:user.chats[i].chat,user_query:user.chats[i].with,
+                                    chatted: "nav" }) %>
+
+                                    <%}%>
+                        </div>
+                </div>
+
+            </li>
+ 
+        </ul>
+        <% } %>
+            <ul class="nav-auth">
+                <% if (!isAuthenticated) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Signup</a>
+                    </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <form class="form-logout" action="/logout" method="post">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button class="logout-btn" type="submit">Logout</button>
+                            </form>
+                        </li>
+                        <% } %>
+            </ul>
+</nav>

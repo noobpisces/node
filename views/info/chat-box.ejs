@@ -1,0 +1,49 @@
+<% if (chatted == 'nav'){ %>
+    <div class="chat-box" id="<%= chat_id %>">
+        <input type="hidden" class="csrfToken" value="<%= csrfToken %>">
+        <input type="hidden" class="user_id" value="<%= user._id %>">
+        <input type="hidden" class="user_query_id" value="<%= user_query._id %>">
+        <input type="hidden" class="chat_id" value="<%= chat_id %>">
+        <div class="chat_name">
+            <img src="<%= user_query.profilePicture ? user_query.profilePicture : 'images/avatar/66797a8c9bb5d0b914b421b9-1719802717362-433928235PEhn8kSfHBhHASxgQSidcn-1200-80.jpg'%>"
+                alt="" class="avartar">
+            <span>
+                <%= user_query.name %>
+            </span>
+        </div>
+        <span class="close-chat" style="background-color: red;position:absolute; right: 0;">&times;</span>
+        <div class="chat_content">
+
+
+        </div>
+        <div class="chat_place">
+            <input type="text" placeholder="Type a message" class="chat_message" name="chat_input">
+            <button class="send_message"> ></button>
+        </div>
+    </div>
+    <% }else if (chatted == 'no_chatted'){ %>
+        <div class="chat-box" >
+            <input type="hidden" class="csrfToken" value="<%= csrfToken %>">
+            <input type="hidden" class="user_id" value="<%= user._id %>">
+            <input type="hidden" class="user_query_id" value="<%= user_query._id %>">
+            <div class="chat_name">
+                <img src="<%= user_query.profilePicture ? user_query.profilePicture : 'images/avatar/66797a8c9bb5d0b914b421b9-1719802717362-433928235PEhn8kSfHBhHASxgQSidcn-1200-80.jpg'%>"
+                    alt="" class="avartar">
+                <span>
+                    <%= user_query.name %>
+                </span>
+            </div>
+            <span class="close-chat" style="background-color: red;position:absolute; right: 0;"
+                onclick="unGetChat('<%=  user_query._id %>')">&times;</span>
+            <div class="chat_content">
+    
+    
+            </div>
+            <div class="chat_place">
+                <input type="text" placeholder="Type a message" class="chat_message" name="chat_input">
+                <button class="send_message"> ></button>
+            </div>
+        </div>
+        <% } else{%>
+            <input type="hidden" class="chat_id" value="<%= chat_id %>">
+            <% } %>

@@ -1,0 +1,224 @@
+<%- include('./head.ejs') %>
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/post_detail.css">
+    <link rel="stylesheet" href="css/picture_video.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <script src="/socket.io/socket.io.js"></script>
+    </head>
+
+    <body>
+        <%- include('./navigation.ejs') %>
+            <% if(!update){ %>
+                <div class="Modal-Post">
+                    <div class="modal-content">
+                        <span class="close1">&times;</span>
+
+                        <div class="post">
+                            <div class="user-block">
+                                <img class="avartar" src="<%= user_query.profilePicture %>" alt="User Image">
+                                <span class="username"><a href="#">
+                                        <%= user_query.name %>
+                                    </a></span>
+                                <span class="description">
+                                    <%= post.status %> - <%= post.createdAt %>
+                                </span>
+                            </div>
+
+                            <div class="slider">
+                                <div class="slides">
+                                    <% for (let i=0; i < post.media.length; i++) { %>
+                                        <div class="img_slide">
+                                            <img class="slide" src="<%=post.media[i].url%>" alt="Image 1">
+                                            <span class="num">
+                                                <%= i + 1 %> / <%=post.media.length%>
+                                            </span>
+                                        </div>
+
+                                        <% } %>
+
+
+                                </div>
+                                <div class="navigation">
+                                    <button class="prev">Prev</button>
+                                    <button class="next">Next</button>
+                                </div>
+                            </div>
+
+
+
+                            <p>
+                                <%= post.author.name %>: <%= post.content %>
+                            </p>
+
+
+                            <% if (post.likes.includes(user._id)) { %>
+                                <button type="button" class="btn-like" id="like-btn-modal-<%=post._id%>"
+                                    onclick="likehaha('<%=post._id%>', 'like-btn-modal-<%=post._id%>','<%= csrfToken %>')"
+                                    style=background-color:blue>
+                                    Liked</button>
+                                <% } else { %>
+                                    <button type="button" class="btn-like" id="like-btn-modal-<%=post._id%>"
+                                        onclick="likehaha('<%=post._id%>', 'like-btn-modal-<%=post._id%>','<%= csrfToken %>')">
+                                        Like
+                                    </button>
+                                    <% } %>
+
+
+
+
+                                        <span class="num-like-cmt">
+                                            <span id="numlike-modal-<%=post._id%>">
+                                                <%= post.likes.length %> likes -
+                                            </span>
+
+                                            <span id="numcmt-modal-<%=post._id%>">
+                                                <%= post.comments.length %>
+                                                    comments
+                                            </span>
+                                        </span>
+
+
+
+                        </div>
+                        <div class="box_cmt">
+                            <div class="box-comments" id="box-cmts-<%= post._id %>">
+                                <%if (post.comments.length> 0){ %>
+                                    <% for (let i=0; i < post.comments.length; i++) { %>
+                                        <div class="box-comment">
+                                            <img class="avartar"
+                                                src="<%= user_comments[post.comments[i]].profilePicture %>"
+                                                alt="User Image">
+                                            <div class="comment-text">
+                                                <span class="username">
+                                                    <%= user_comments[post.comments[i]].name %>
+                                                        <span class="text-muted pull-right">
+                                                            <%= comments[post.comments[i]].createdAt %>
+                                                        </span>
+                                                </span>
+                                                <%= comments[post.comments[i]].content %>
+                                            </div>
+                                            <div class="comment-actions">
+                                                <a href="#" class="like-btn" data-comment-id="<%= post.comments[i] %>">
+                                                    <i class="fas fa-thumbs-up"></i> Like
+                                                </a>
+                                                <a href="#" class="reply-btn" data-comment-id="<%= post.comments[i] %>">
+                                                    <i class="fas fa-reply"></i> Reply
+                                                </a>
+                                            </div>
+
+                                            <% if (comments[post.comments[i]].replies.length> 0) { %>
+                                                <div class="replies">
+                                                    <% for (let j=0; j < comments[post.comments[i]].replies.length; j++)
+                                                        { %>
+                                                        <div class="box-reply">
+                                                            <img class="avartar"
+                                                                src="<%= user_comments[comments[post.comments[i]].replies[j]].profilePicture %>"
+                                                                alt="User Image">
+                                                            <div class="comment-text">
+                                                                <span class="username">
+                                                                    <%= user_comments[comments[post.comments[i]].replies[j]].name
+                                                                        %>
+                                                                        <span class="text-muted pull-right">
+                                                                            <%= comments[comments[post.comments[i]].replies[j]].createdAt
+                                                                                %>
+                                                                        </span>
+                                                                </span>
+                                                                <%= comments[comments[post.comments[i]].replies[j]].content
+                                                                    %>
+                                                            </div>
+                                                            <div class="comment-actions">
+                                                                <a href="#" class="like-btn"
+                                                                    data-reply-id="<%= comments[post.comments[i]].replies[j] %>">
+                                                                    <i class="fas fa-thumbs-up"></i> Like
+                                                                </a>
+                                                                <a href="#" class="reply-btn"
+                                                                    data-reply-id="<%= comments[post.comments[i]].replies[j] %>">
+                                                                    <i class="fas fa-reply"></i> Reply
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                </div>
+                                                <% } %>
+                                        </div>
+                                        <% } %>
+
+
+                                            <% } %>
+                            </div>
+                            <div class="box-footer">
+                                <img class="avartar" src="<%= user.profilePicture %>" alt="Alt Text">
+                                <div class="img-push">
+                                    <input type="text" class="form-control input-sm2" name='content'
+                                        id="cmt-user-<%= post._id  %>" placeholder="Press enter to post comment">
+                                </div>
+                                <button
+                                    onclick="cmt_post('<%= post._id  %>','cmt-user-<%= post._id  %>','<%= csrfToken %>')">gửi</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <%}else {%>
+                    <form class="update_post " id="updatePostForm" action="/posts/<%= post._id %>/update" method="POST"
+                        enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" id="csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="postid" id="postid" value="<%= post._id %>">
+                        <div class="form-group">
+                            <label for="content">Nội dung</label>
+                            <textarea name="content" id="content" class="form-control"><%= post.content %></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Địa điểm</label>
+                            <input type="text" name="location" id="location" class="form-control"
+                                value="<%= post.location %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Trạng thái</label>
+                            <input type="text" name="status" id="status" class="form-control"
+                                value="<%= post.status %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="visibility">Tính bảo mật</label>
+                            <select name="visibility" id="visibility" class="form-control">
+                                <option value="public" <%=post.visibility==='public' ? 'selected' : '' %>>Công khai
+                                </option>
+                                <option value="private" <%=post.visibility==='private' ? 'selected' : '' %>>Riêng tư
+                                </option>
+                                <option value="friends" <%=post.visibility==='friends' ? 'selected' : '' %>>Bạn bè
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags">Thẻ</label>
+                            <input type="text" name="tags" id="tags" class="form-control" value="<%= post.tags %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Hình ảnh</label>
+                            <input type="file" name="image" id="image" class="form-control" multiple>
+                        </div>
+                        <div class="form-group">
+                            <div class="imgs">
+                                <%for ( let i=0; i<post.media.length;i++){%>
+                                    <div class="media-item1">
+                                        <img src="<%= post.media[i].url%>" alt="" class="img_post">
+                                        <button type="button" class="delete_media_item">xóa ảnh</button>
+                                    </div>
+                                    <%}%>
+                            </div>
+
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="updateButton">Cập nhật</button>
+                    </form>
+                    <%}%>
+    </body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/socket.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/picture_video.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/post.js"></script>
+    <script src="js/like-cmt.js"></script>
+    </html>

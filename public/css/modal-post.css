@@ -1,0 +1,50 @@
+.Modal-Post{
+    display: none;
+
+}
+.Modal-Post.show{
+    display: block;
+    position: absolute;
+    z-index: 999;
+    width: 80%;
+    left: 180px;
+}
+.Modal-Post .modal-content{
+    background-color: white;
+    display: flex;
+    z-index: 9999;
+    justify-content: center;
+}
+.modal-content .post-modal{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.modal-content .box_cmt{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box_cmt .box-footer{
+    display: flex;
+}
+
+.box_cmt .box-comments{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 650px;
+    overflow-y: auto;
+}
+.box-comments .box-comment{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.comment-text{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,69 @@
+.form-create-post{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+}
+.first-create-post{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+#avartar{
+    border-radius: 90%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+#feel{
+    height: 20px;
+    width: 500px;
+}
+
+body.modal-open {
+    /* overflow: hidden; Ngăn không cho cuộn trang khi modal mở */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+.Modal-CreatePost{
+    display: none;
+}
+.Modal-CreatePost.show{
+    display: block;
+    margin-top: 100px;
+    width: 30%;
+    height: 70%;
+    position: absolute;
+    background-color: aliceblue;
+    overflow: hidden;
+    z-index: 999;
+}
+.Modal-CreatePost .modal-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.modal-content .user-content-visibility{
+    display: flex;
+}
+
+.modal-content #content{
+    width: 100%;
+    height: 100px;
+}
+.modal-content .location{
+    margin-top: 20px;
+}
+.modal-content .Media{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.user-content-visibility .visibility{
+    display: flex;
+    flex-direction: column;
+}

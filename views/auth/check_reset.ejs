@@ -1,0 +1,25 @@
+<%- include('../info/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../info/navigation.ejs') %>
+
+            <main>
+
+                        <form class="check-form" action="/reset" method="POST" novalidate>
+                            <div class="form-group">
+                                
+
+                                <input type="hidden" name="email" value="<%= email %>">
+                                <label for="name">code</label>
+                                <input type="text" class="form-control" style="margin: 200px;" name="otp"  required>
+                                <label for="new_password">new_password</label>
+                                <input type="password" name="new_password">
+                            </div>
+        
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="btn btn-primary" type="submit">check</button>
+                        </form>
+            </main>
+    </body>
+    </html>

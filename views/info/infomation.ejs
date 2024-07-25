@@ -1,0 +1,185 @@
+<%- include('./head.ejs') %>
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/modal-post.css">
+    <link rel="stylesheet" href="/css/picture_video.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    </head>
+
+    <body>
+        <%- include('./navigation.ejs') %>
+            <div class="container">
+                <% if (update) { %>
+                    <h1>Update Profile Information</h1>
+                    <form action="/infomation" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="file" id="profilePicture" name="Picture_Video" accept="image/*">
+                            <br>
+                            <img id="profileImg" src="<%= user.profilePicture %>" alt="Profile Picture"
+                                style="max-width: 200px; max-height: 200px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" value="<%= user.name %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio:</label>
+                            <textarea id="bio" name="bio"><%= user.bio %></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday">Birthday:</label>
+                            <input type="date" id="birthday" name="birthday"
+                                value="<%= user.birthday ? user.birthday.toISOString().substr(0, 10) : '' %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select id="gender" name="gender">
+                                <option value="male" <%=user.gender==='male' ? 'selected' : '' %>>Male</option>
+                                <option value="female" <%=user.gender==='female' ? 'selected' : '' %>>Female</option>
+                                <option value="other" <%=user.gender==='other' ? 'selected' : '' %>>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <input type="text" id="address" name="address" value="<%= user.address %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City:</label>
+                            <input type="text" id="city" name="city" value="<%= user.city %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country:</label>
+                            <input type="text" id="country" name="country" value="<%= user.country %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="hobbies">Hobbies:</label>
+                            <input type="text" id="hobbies" name="hobbies" value="<%= user.hobbies.join(', ') %>">
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit">Update</button>
+                    </form>
+                    <% } else { %>
+                        <div class="flex-shrink-0">
+                            <img src="<%= user.profilePicture %>" alt="Generic placeholder image" class="img-fluid"
+                                style="width: 180px; border-radius: 10px;">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Username:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.name %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Bio:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.bio %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Email:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.email %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Birthday:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.birthday ? user.birthday.toDateString() : 'N/A' %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Gender:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.gender %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Address:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.address %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>City:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.city %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Country:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.country %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <p class="mb-0"><strong>Hobbies:</strong></p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">
+                                    <%= user.hobbies.join(', ') %></p>
+    </div>
+</div>  
+<button type="button" data-mdb-button-init data-mdb-ripple-init
+class="btn btn-outline-primary me-1 flex-grow-1" onclick="window.location.href=' /infomation?update=true'">Update
+                                        profile</button>
+                                        <% } %>
+
+                                        <script>
+                                            document.getElementById('profilePicture').addEventListener('change', function(event) {
+                                                const file = event.target.files[0];
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.onload = function(e) {
+                                                        document.getElementById('profileImg').src = e.target.result;
+                                                    }
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            });
+                                        </script>
+                                            <script src="/socket.io/socket.io.js"></script>
+                                            <script src="js/socket.js"></script>
+                                            <script src="js/navigation.js"></script>
+                                            <script src="js/picture_video.js"></script>
+                                            <script src="js/like-cmt.js"></script>
+                                            <script src="js/profile.js"></script>
+                                            <script src="js/chat.js"></script>
+    </body>
+
+    </html>

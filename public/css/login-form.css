@@ -1,0 +1,30 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+}
+.login-form .form-group{
+    padding: 10px;
+    margin:10px
+}
+/* .reset{
+    margin-top: 30px;
+    margin-left: 710px;
+} */
+#email{
+    margin-left: 15px;
+}
+
+.error{
+    position:absolute;
+    margin-top: 100px;
+    color: red;
+    
+}

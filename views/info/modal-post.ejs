@@ -1,0 +1,111 @@
+<div class="Modal-Post">
+    <div class="modal-content">
+        <input type="hidden" value="<%=post._id %>" class="post_id">
+        <input type="hidden" value="<%=csrfToken %>" class="csrfToken">
+        <span class="close1">&times;</span>
+
+        <div class="post-modal">
+            <div class="user-block">
+                <img class="avartar" src="<%= user_query.profilePicture %>" alt="User Image">
+                <span class="username"><a href="#">
+                        <%= user_query.name %>
+                    </a></span>
+                <span class="description">
+                    <%= post.status %> - <%= post.createdAt %>
+                </span>
+                <% if (user_query.name==user.name) {%>
+                    <button class="deletepost-modal">xóa post</button>
+                    <% } %>
+            </div>
+
+            <div class="slider">
+                <div class="slides">
+                    <% for (let i=0; i < post.media.length; i++) { %>
+                        <div class="img_slide">
+                            <img class="slide" src="<%=post.media[i].url%>" alt="Image 1">
+                            <span class="num">
+                                <%= i + 1 %> / <%=post.media.length%>
+                            </span>
+                        </div>
+
+                        <% } %>
+
+
+                </div>
+                <div class="navigation">
+                    <button class="prev">Prev</button>
+                    <button class="next">Next</button>
+                </div>
+            </div>
+
+
+
+            <p>
+                <%= post.author.name %>: <%= post.content %>
+            </p>
+
+
+            <% if (post.likes.includes(user._id)) { %>
+                <button type="button" class="btn-like" id="like-btn-modal-<%=post._id%>"
+                    onclick="likehaha('<%=post._id%>', 'like-btn-modal-<%=post._id%>','<%= csrfToken %>')"
+                    style=background-color:blue>
+                    Liked</button>
+                <% } else { %>
+                    <button type="button" class="btn-like" id="like-btn-modal-<%=post._id%>"
+                        onclick="likehaha('<%=post._id%>', 'like-btn-modal-<%=post._id%>','<%= csrfToken %>')">
+                        Like
+                    </button>
+                    <% } %>
+
+
+
+
+                        <span class="num-like-cmt">
+                            <span id="numlike-modal-<%=post._id%>">
+                                <%= post.likes.length %> likes -
+                            </span>
+
+                            <span id="numcmt-modal-<%=post._id%>">
+                                <%= post.comments.length %>
+                                    comments
+                            </span>
+                        </span>
+
+
+
+        </div>
+        <div class="box_cmt">
+            <div class="box-comments" id="box-cmts-<%= post._id %>">
+                <%if (post.comments.length> 0){ %>
+                    <% for (let i=0; i < post.comments.length; i++) { %>
+                        <div class="box-comment">
+                            <img class="avartar" src="<%= user_comments[post.comments[i]].profilePicture %>"
+                                alt="User Image">
+                            <div class="comment-text">
+                                <span class="username">
+                                    <%= user_comments[post.comments[i]].name %>
+                                        <span class="text-muted pull-right">
+                                            <%= comments[post.comments[i]].createdAt %>
+                                        </span>
+                                </span>
+                                <%= comments[post.comments[i]].content %>
+                            </div>
+                        </div>
+                        <% } %>
+
+
+                            <% } %>
+            </div>
+            <div class="box-footer">
+                <img class="avartar" src="<%= user.profilePicture %>" alt="Alt Text">
+                <div class="img-push">
+                    <input type="text" class="form-control input-sm2" name='content' id="cmt-user-<%= post._id  %>"
+                        placeholder="Press enter to post comment">
+                </div>
+                <button
+                    onclick="cmt_post('<%= post._id  %>','cmt-user-<%= post._id  %>','<%= csrfToken %>')">gửi</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,37 @@
+
+
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+.slides {
+    display: flex;
+    height: 450px;
+    transition:100ms;
+    /* Sử dụng flexbox cho slides */
+}
+
+.slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img_slide{
+    position: relative;
+    width: 100%;
+    flex: 0 0 auto;
+    
+
+}
+.num{
+    position: absolute;
+    z-index: 1;
+    right: 8px;
+} 
+

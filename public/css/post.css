@@ -1,0 +1,39 @@
+.posts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.post, .post-modal{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 700px;
+    margin: 40px 400px 40px 400px;
+}
+
+.avartar{
+    border-radius: 90%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.user-block{
+    display: flex;
+    align-items: center;
+}
+
+.btn-like{
+    width: 100px;
+}
+
+
+.box-footer{
+    display: flex;
+    align-items: center;
+}
+.input-sm{
+    flex:1;
+}
